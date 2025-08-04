@@ -18,6 +18,7 @@
         />
       </div>
 
+      <!-- Navigation -->
       <div class="gap-5 text-center max-sm:grid">
         <div class="flex mt-16 sm:justify-between max-sm:gap-5">
           <button
@@ -55,6 +56,8 @@
             <ArrowRight class="w-4 h-4 ml-2" />
           </button>
         </div>
+
+        <!-- Only for responsive layout -->
         <div class="block sm:hidden">
           Strona
           <input
@@ -97,5 +100,9 @@ const changePage = (page) => {
 const deletePost = (id) => {
   store.commit("deletePost", id);
   store.dispatch("handleToaster");
+
+  if (currentPage.value > totalPages.value) {
+    changePage(currentPage.value - 1);
+  }
 };
 </script>

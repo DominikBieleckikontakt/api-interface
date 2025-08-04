@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+// Global variable for timeout
 let hideToasterTimeout;
 
 export default createStore({
