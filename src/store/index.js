@@ -1,12 +1,15 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+let hideToasterTimeout;
+
 export default createStore({
   state: {
     posts: [],
     users: [],
     currentPage: 1,
     postsPerPage: 10,
+    isToasterVisible: false,
   },
   getters: {
     paginatedPosts(state) {
@@ -31,6 +34,12 @@ export default createStore({
     deletePost(state, id) {
       state.posts = state.posts.filter((post) => post.id !== id);
     },
+    showToaster(state) {
+      state.isToasterVisible = true;
+    },
+    hideToaster(state) {
+      state.isToasterVisible = false;
+    },
     setCurrentPage(state, page) {
       state.currentPage = page;
     },
@@ -45,6 +54,13 @@ export default createStore({
       );
       commit("setPosts", postsRes.data);
       commit("setUsers", usersRes.data);
+    },
+    handleToaster({ commit }) {
+      commit("showToaster");
+      clearTimeout(hideToasterTimeout);
+      hideToasterTimeout = setTimeout(() => {
+        commit("hideToaster");
+      }, 2000);
     },
   },
 });
